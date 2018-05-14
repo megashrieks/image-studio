@@ -20,17 +20,21 @@ function blur(imgcontext) {
         [-1, 8, -1],
         [-1, -1,-1]
     ];
-    /*
+    
     var convolutionMatrix = [
-        [0, 0, 0],
-        [0, 1, 0],
-        [0, 0, 0]
+        [1, 1, 1],
+        [1, 1, 1],
+        [1, 1, 1]
     ];
-    */
+    
+    // var convolutionMatrix = generateGaussian({
+    //     x: 3,
+    //     y: 3
+    // }, 200);
     applyConvolution(data, convolutionMatrix);
     imgcontext.data = data;
-    //edgedetect(imgcontext)
-    ctx.putImageData(imgcontext, start.x+offset,start.y+offset);
+    edgedetect(imgcontext)
+    ctx.putImageData(imgcontext, start.x,start.y);
 }
 function edgedetect(imgcontext) {
     var data = imgcontext.data;
@@ -52,7 +56,6 @@ function applyConvolution(data, convolution) {
     convolutionToColor(r, convolution);
     convolutionToColor(g, convolution);
     convolutionToColor(b, convolution);
-    convolutionToColor(a, convolution);
     combineColor(data, r, 0);
     combineColor(data, g, 1);
     combineColor(data, b, 2);
@@ -97,7 +100,7 @@ function convolutionToColor(arr, convolution) {
                     sum += arr[p][q] * convolution[p + ~~(len / 2) - i][q + ~~(len / 2) - j];
                 }
             }
-            arr2[i][j] =  (sum / convolutionSum);
+            arr2[i][j] =  Math.min(Math.abs(sum / convolutionSum),255);
         }
     }
     for (var i = 0; i < size.x; ++i){
