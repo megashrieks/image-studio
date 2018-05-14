@@ -16,9 +16,9 @@ function resize() {
 function blur(imgcontext) {
     var data = imgcontext.data;
     var convolutionMatrix = [
-        [1, 1, 1],
-        [1, 1, 1],
-        [1, 1, 1]
+        [-1, -1, -1],
+        [-1, 8, -1],
+        [-1, -1,-1]
     ];
     /*
     var convolutionMatrix = [
@@ -81,7 +81,6 @@ function convolutionToColor(arr, convolution) {
             convolutionSum += convolution[i][j];
         }
     }
-    /*
     var arr2 = [];
     for (var i = 0; i < size.x; ++i){
         arr2.push([]);
@@ -89,7 +88,6 @@ function convolutionToColor(arr, convolution) {
             arr2[i].push(0);
         }
     }
-    */
     convolutionSum = convolutionSum <= 0 ? 1 : convolutionSum;
     for (var i = ~~(len / 2)+!(len&1); i < arr.length - ~~(len/2); ++i){
         for (var j = ~~(len / 2)+!(len & 1); j < arr[i].length - ~~(len / 2); ++j) {
@@ -99,14 +97,14 @@ function convolutionToColor(arr, convolution) {
                     sum += arr[p][q] * convolution[p + ~~(len / 2) - i][q + ~~(len / 2) - j];
                 }
             }
-            arr/*2*/[i][j] =  (sum / convolutionSum);
+            arr2[i][j] =  (sum / convolutionSum);
         }
-    }/*
+    }
     for (var i = 0; i < size.x; ++i){
         for (var j = 0; j < size.x; ++j){
             arr[i][j] = arr2[i][j];
         }
-    }*/
+    }
 }
 function combineColor(arr, grid, offset) {
     for (var i = 0; i < grid.length; ++i){
