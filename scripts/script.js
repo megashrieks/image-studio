@@ -27,13 +27,13 @@ function blur(imgcontext) {
         [1, 1, 1]
     ];
     
-    // var convolutionMatrix = generateGaussian({
-    //     x: 3,
-    //     y: 3
-    // }, 200);
+    var convolutionMatrix = generateGaussian({
+        x: 13,
+        y: 13
+    }, 200000000000000000000);
     applyConvolution(data, convolutionMatrix);
     imgcontext.data = data;
-    edgedetect(imgcontext)
+    // edgedetect(imgcontext)
     ctx.putImageData(imgcontext, start.x,start.y);
 }
 function edgedetect(imgcontext) {
